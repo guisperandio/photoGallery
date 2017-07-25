@@ -52,11 +52,30 @@ body{
 	bottom: 0;
 	left: 0;
 	border: 0;
-	background-color: #666;
-	padding: 8px 10px;
+	background-color: #888;
+	padding: 8px 25px;
 	color: #fff;
 	text-transform: uppercase;
 	font-size: 0.6rem;
 	border-radius: 20px;
 	-webkit-border-radius: 20px;
+}
+
+.box-photo .info-container .list-tags{
+	width: 100%;
+	position: absolute;
+	bottom: 0
+}
+
+.box-photo .info-container .list-tags .tag{
+	display: inline-block;
+	padding: 5px 12px;
+	text-transform: uppercase;
+	font-size: 0.6rem;
+	border-radius: 20px;
+	-webkit-border-radius: 20px;
+	background-color: #eaeaea;
+	color: #999;
+	font-weight: bold;
+
 }

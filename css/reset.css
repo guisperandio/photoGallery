@@ -43,3 +43,7 @@ table {
     -webkit-box-sizing: inherit;
     box-sizing: inherit;
 }
+button:focus{
+	outline: 0;
+	background-color: #1e9ec5 !important;
+}
