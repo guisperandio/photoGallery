@@ -28,6 +28,12 @@ h2{
 	color: #a94442;
 	border-color: #ebccd1;
 }
+.display{
+	display: block;
+}
+.no-display{
+	display: none !important;
+}
 .box-photo{
 	position: relative;
 	width: 100%;
@@ -38,7 +44,16 @@ h2{
 	overflow: hidden;
 	height: 145px;
 }
-
+.box-photo-all-infos{
+	height: 300px !important; 
+	-webkit-transition: height 1s; /* Safari */
+    transition: height 1s;
+}
+.box-photo.box-photo-all-infos .info-container .list-tags .tag.no-display{
+	display: inline-block !important;
+	-webkit-transition: * 1s; /* Safari */
+    transition: * 1s;
+}
 .box-photo .img-container{
 	float: left;
 }

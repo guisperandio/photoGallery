@@ -10,18 +10,24 @@ function deleteElement(id){
 	var elem = document.getElementById(id);
 	return elem.parentNode.removeChild(elem);
 }
+function showAllTags(listMore){
+	listMore.parentNode.parentNode.parentNode.setAttribute('class', 'box-photo box-photo-all-infos')
+	ulListTagsHeight = listMore.parentElement.clientHeight + 100;
+	listMore.parentNode.parentNode.parentNode.setAttribute('style', 'height: ' + ulListTagsHeight + 'px !important;')
+	deleteElement(listMore.getAttribute('id'))
+}
 function generateTags(tagsObj){
 	var tags = tagsObj.photo.tags.tag;
 	var htmlBlock = '<ul class="list-tags">';
 	if(Object.keys(tags).length > 0){
+		var count = 0;
 		tags.forEach( function(tag, index) {
-			console.log(index)
-			if(index >= 3){
-				return false
-			}
-			else
-				htmlBlock += buildHTMLTagsBlock(tag);
+			htmlBlock += buildHTMLTagsBlock(tag, index);
+			count = index;
 		});	
+		if(count >= 3)
+			htmlBlock += '<li class="tag" id="tag-'+tagsObj.photo.id+' "onclick="showAllTags(this)")>...</li>'
+		
 		htmlBlock += '</ul>';
 		document.getElementById(tagsObj.photo.id).innerHTML += htmlBlock;
 		deleteElement('btn-'+ tagsObj.photo.id);
@@ -73,17 +79,21 @@ function getPhotos(per_page, page, callback){
 	var photosObj = getJSON(config, data => callback(JSON.parse(data)));
 }
 
-function buildHTMLTagsBlock(tagElement){
+function buildHTMLTagsBlock(tagElement, index){
+	var liClass = 'display';
 	if(tagElement.raw.length > 10)
 		tagElement.raw = tagElement.raw.substr(0, 10) + '...';
-	var html = '<li class="tag">'+tagElement.raw+'</li>';
+	if(index >= 3)
+		liClass = 'no-display';
+	var html = '<li class="tag '+liClass+'">'+tagElement.raw+'</li>';
 	return html;
 }
 
 function buildHTMLPhotoBlock(photoElement){
 	if(photoElement.title == '')
 		photoElement.title = 'This image has no title.';
-
+	if(photoElement.title.length > 30)
+		photoElement.title = photoElement.title.substr(0, 30) + '...';
 	var html = '<div class="col-1-sm col-2-md col-3-bg"> '
 				+ '<div class="box-photo">' 
 					+ '<div class="img-container">'
