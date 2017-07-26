@@ -1,5 +1,9 @@
 var page = 1;
+
+//shows loading img
 showLoading();
+
+//fill the window
 initialFill();
 
 //start of the methods and functions
@@ -9,6 +13,8 @@ function initialFill(){
 	//There i can use "data => createNewPhotoBlock(data, firstFill = 1)" instead "function (data) { createNewPhotoBlock(data, firstFill = 1) })", but it dont work in IE LT 11
 	getPhotos(per_page = 5, page, function (data) { createNewPhotoBlock(data, firstFill = 1) });
 }
+
+//Listener to check the end of page
 document.addEventListener("scroll", function (event) {
     checkEndOfPage();
 });
@@ -45,7 +51,7 @@ function getJSON(config, callback){
     xmlhttp.open("GET", config.url_request, true);
     xmlhttp.send();
 }
-
+//build the configs to do the json request
 function getPhotos(per_page, page, callback){
 	var config = {};
 	config.api_key = 'da328dff5fe5e3ddd61cb3e7ceebb771';
@@ -60,7 +66,7 @@ function getPhotos(per_page, page, callback){
 	
 	getJSON(config, function(data){callback(JSON.parse(data))});
 }
-
+//build the HTML of IMG
 function buildHTMLPhotoBlock(photoElement){
 	if(photoElement.title.length > 30)
 		photoElement.title = photoElement.title.substr(0, 30) + '...';
@@ -80,7 +86,7 @@ function buildHTMLPhotoBlock(photoElement){
 			+ '</div>';
 	return html;
 }
-
+//iteration of the five img that returned in the request
 function createNewPhotoBlock(photosObj, firstFill){
 
 	firstFill = firstFill || 0;
@@ -96,7 +102,7 @@ function createNewPhotoBlock(photosObj, firstFill){
 		checkEndOfPage(firstFill);
 	}
 }
-
+//config the request of tags
 function getTags(elementId, callback){
 	var config = {};
 	config.api_key = 'da328dff5fe5e3ddd61cb3e7ceebb771';
@@ -104,8 +110,9 @@ function getTags(elementId, callback){
 							'api_key='+config.api_key+
 							'&photo_id='+elementId+
 							'&format=json&nojsoncallback=1';
-	var tagsObj = getJSON(config, function(data) { callback(JSON.parse(data)) });
+	getJSON(config, function(data) { callback(JSON.parse(data)) });
 }
+//build li block of tag
 function buildHTMLTagsBlock(tagElement, index){
 	var liClass = 'display';
 	if(tagElement.raw.length > 10)
@@ -115,6 +122,7 @@ function buildHTMLTagsBlock(tagElement, index){
 	var html = '<li class="tag '+liClass+'">'+tagElement.raw+'</li>';
 	return html;
 }
+//generate the ul of tags, and put a "more" link if the image has more than 3 tags
 function generateTags(tagsObj){
 	var tags = tagsObj.photo.tags.tag;
 	var htmlBlock = '<ul class="list-tags">';
@@ -137,14 +145,14 @@ function generateTags(tagsObj){
 	}	
 
 }
-
+//shows the hidden tags of a img
 function showAllTags(listMore){
 	listMore.parentNode.parentNode.parentNode.setAttribute('class', 'box-photo box-photo-all-infos')
 	ulListTagsHeight = listMore.parentElement.clientHeight + 100;
 	listMore.parentNode.parentNode.parentNode.setAttribute('style', 'height: ' + ulListTagsHeight + 'px !important;')
 	deleteElement(listMore.getAttribute('id'))
 }
-
+//function to check the end of page and with its is true load more 5 images in flickr
 function checkEndOfPage(firstFill){
 	firstFill = firstFill || 0;
 	var endOfPage = document.getElementById('photoGallery').clientHeight;
