@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Photo Gallery - Guilherme Santos</title>
-	<link rel="stylesheet" href="css/reset.css">
-	<link rel="stylesheet" href="css/grid.css">
-	<link rel="stylesheet" href="css/style.css">
-	<script src="js/component.js"></script>
-</head>
-<body>
-	<div class="container" id="photoGallery">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Photo Gallery - Guilherme Santos</title>
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/grid.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/loading.css">
+	</head>
+	<body>
 
-		<div class="row" id="photoBlock">
-
-			
-
+		<div class="container" id="photoGallery">
+			<div class="row" id="photoBlock">
+			</div>
 		</div>
 
-	</div>
-</body>
+		<div id="loadingImg" class="hidden">
+			<div class="lds-css ng-scope">
+				<div class="lds-spinner" style="100%;height:100%"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+			</div>
+		</div>
+
+		<script src="js/component.js"></script>
+	</body>
 </html>
