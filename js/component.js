@@ -4,7 +4,7 @@ initialFill();
 
 //start of the methods and functions
 function initialFill(){
-	getPhotos(per_page = 5, page, data => { createNewPhotoBlock(data, initialFill = 1) });
+	getPhotos(per_page = 5, page, data => { createNewPhotoBlock(data, firstFill = 1) });
 }
 function deleteElement(id){
 	var elem = document.getElementById(id);
@@ -26,7 +26,7 @@ function generateTags(tagsObj){
 			count = index;
 		});	
 		if(count >= 3)
-			htmlBlock += '<li class="tag" id="tag-'+tagsObj.photo.id+' "onclick="showAllTags(this)")>...</li>'
+			htmlBlock += '<li class="tag tagButton" id="tag-'+tagsObj.photo.id+' "onclick="showAllTags(this)")>...</li>'
 		
 		htmlBlock += '</ul>';
 		document.getElementById(tagsObj.photo.id).innerHTML += htmlBlock;
@@ -109,7 +109,7 @@ function buildHTMLPhotoBlock(photoElement){
 	return html;
 }
 
-function createNewPhotoBlock(photosObj, initialFill = 0){
+function createNewPhotoBlock(photosObj, firstFill = 0){
 	var photos = photosObj.photos.photo;
 	var htmlBlock = '';
 	photos.forEach( function(photoElement, index) {
@@ -117,8 +117,8 @@ function createNewPhotoBlock(photosObj, initialFill = 0){
 	});
 	document.getElementById('photoBlock').innerHTML += htmlBlock;
 
-	if(initialFill == 1){
-		checkEndOfPage(initialFill);
+	if(firstFill == 1){
+		checkEndOfPage(firstFill);
 	}
 }
 
@@ -126,19 +126,19 @@ document.addEventListener("scroll", function (event) {
     checkEndOfPage();
 });
 
-function checkEndOfPage(initialFill = 0){
+function checkEndOfPage(firstFill = 0){
 	var endOfPage = document.getElementById('photoGallery').offsetHeight;
     var lastDiv = document.querySelector("#photoBlock > div:last-child");
     var lastDivOffset = lastDiv.offsetTop + lastDiv.clientHeight;
     var pageOffset = window.pageYOffset + window.innerHeight;
-    page++;
-    if(initialFill == 0){
+    if(firstFill == 0){
 	   	if(pageOffset >= endOfPage){
-	   		getPhotos(per_page = 5, page, data => { createNewPhotoBlock(data) });
+	   		getPhotos(per_page = 5, page = 1, data => { createNewPhotoBlock(data) });
 	   	}
     }
    	else if(lastDivOffset < window.innerHeight){
-   		getPhotos(per_page = 5, page, data => { createNewPhotoBlock(data, initialFill = 1) });
+    	page++;
+   		getPhotos(per_page = 5, page, data => { createNewPhotoBlock(data, firstFill = 1) });
    	}
 }
 
