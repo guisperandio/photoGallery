@@ -92,6 +92,7 @@ h2{
 	font-size: 0.6rem;
 	border-radius: 20px;
 	-webkit-border-radius: 20px;
+	cursor: pointer;
 }
 
 .box-photo .info-container .list-tags{
