@@ -43,6 +43,7 @@ h2{
 	padding: 15px;
 	overflow: hidden;
 	height: 145px;
+	margin: 10px 0;
 }
 .box-photo-all-infos{
 	height: 300px !important; 
@@ -110,4 +111,11 @@ h2{
 	color: #999;
 	font-weight: bold;
 	margin-right: 1px;
+}
+.box-photo .info-container .list-tags .tagButton, .box-photo .info-container button{
+	cursor: pointer; 
+}
+.box-photo .info-container .list-tags .tagButton:hover, .box-photo .info-container button:hover{
+	background-color: #1e9ec5;
+	color: #fff
 }
