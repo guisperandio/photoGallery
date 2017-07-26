@@ -58,7 +58,7 @@ function getPhotos(per_page, page, callback){
 							'&page=' + config.page +
 							'&extras=url_q';
 	
-	var photosObj = getJSON(config, function(data){callback(JSON.parse(data))});
+	getJSON(config, function(data){callback(JSON.parse(data))});
 }
 
 function buildHTMLPhotoBlock(photoElement){
@@ -73,7 +73,8 @@ function buildHTMLPhotoBlock(photoElement){
 					+ '</div>'
 					+ '<div class="info-container" id="'+photoElement.id+'">'
 						+'<h2 class="photo-title">'+ photoElement.title +'</h2>'
-						+'<button id="btn-'+photoElement.id+'" class="bgr-gray load-tags" onclick="getTags('+photoElement.id+', function(data) { generateTags(data) })">Load Tags</button>'
+						+'<button id="btn-'+photoElement.id+'" class="bgr-gray load-tags" '+
+							'onclick="getTags('+photoElement.id+', function(data) { generateTags(data) })">Load Tags</button>'
 					+'</div>'
 				+'</div>'
 			+ '</div>';
@@ -81,6 +82,7 @@ function buildHTMLPhotoBlock(photoElement){
 }
 
 function createNewPhotoBlock(photosObj, firstFill){
+
 	firstFill = firstFill || 0;
 	var photos = photosObj.photos.photo;
 	var htmlBlock = '';
@@ -133,6 +135,7 @@ function generateTags(tagsObj){
 		deleteElement('btn-'+ tagsObj.photo.id);
 		document.getElementById(tagsObj.photo.id).innerHTML += '<div class="alert alert-warning bottom">This image has no tags!</div>';	
 	}	
+
 }
 
 function showAllTags(listMore){
@@ -143,14 +146,13 @@ function showAllTags(listMore){
 }
 
 function checkEndOfPage(firstFill){
-
 	firstFill = firstFill || 0;
-	var endOfPage = document.getElementById('photoGallery').offsetHeight;
+	var endOfPage = document.getElementById('photoGallery').clientHeight;
     var lastDiv = document.querySelector("#photoBlock > div:last-child");
     var lastDivOffset = lastDiv.offsetTop + lastDiv.clientHeight;
     var pageOffset = window.pageYOffset + window.innerHeight;
     if(firstFill == 0){	
-	   	if(pageOffset >= endOfPage){
+	   	if(Math.round(pageOffset) >= endOfPage){
 	   		showLoading();
 	   		getPhotos(per_page = 5, page = 1, function(data){createNewPhotoBlock(data)});
 	   	}
@@ -160,7 +162,9 @@ function checkEndOfPage(firstFill){
 	   	showLoading();
    		getPhotos(per_page = 5, page, function(data){ createNewPhotoBlock(data, firstFill = 1) });
    	}
-
+	// "page++" variable page here makes the scroll down shows older images, with "page = 1" in the function getPhotos, 
+	// scroll down shows the newest images in flickr. 
+	//The method "getRecents" dont verify if the images are duplicated
 }
 
 
